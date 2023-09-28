@@ -31,7 +31,9 @@
     "engines": {
         "node": ">=8.9"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@supernova-studio/pulsar-next": "2.0.17"
+    },
     "devDependencies": {
         "@ava/typescript": "^4.0.0",
         "@istanbuljs/nyc-config-typescript": "latest",
