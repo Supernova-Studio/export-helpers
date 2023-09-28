@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "target": "esnext",
+    "outDir": "build/module",
+    "module": "esnext",
+    "lib": [
+      "ES2020.String"
+    ]
+  },
+  "exclude": [
+    "node_modules/**"
+  ]
+}

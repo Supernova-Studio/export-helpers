@@ -27,7 +27,7 @@ To use the utilities, simply import them from the library:
 import { TokenUtils } from "@supernova-studio/export-helpers"
 ```
 
-You can find the full list of available utilities [here](./utilities.md).
+You can find the full list of available utilities [here](./docs/helpers.md).
 
 
 ## Help Us Build a Better Product
