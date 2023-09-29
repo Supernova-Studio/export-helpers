@@ -1,5 +1,6 @@
 import { ColorToken, ColorTokenValue, OpacityToken, Token } from "@supernova-studio/pulsar-next"
 import { ColorFormat } from "../enums/ColorFormat"
+import { sureOptionalReference } from "../libs/tokens"
 
 /** Helps with transformation of strings */
 export class ColorHelper {
@@ -23,26 +24,17 @@ export class ColorHelper {
     let opacityReferenceName: string | undefined = undefined
 
     // Check references first
-    if (color.referencedTokenId) {
-      const token = allTokens.get(color.referencedTokenId)
-      if (!token) {
-        throw new Error(`Can't format color because reference id ${color.referencedTokenId} [color.ref] was not found`)
-      }
-      fullReferenceName = tokenToVariableRef(token)
+    const fullToken = sureOptionalReference(color.referencedTokenId, allTokens)
+    if (fullToken) {
+      fullReferenceName = tokenToVariableRef(fullToken)
     } else {
-      if (color.color.referencedTokenId) {
-        const token = allTokens.get(color.color.referencedTokenId)
-        if (!token) {
-          throw new Error(`Can't format color because reference id ${color.color.referencedTokenId} [color.color.ref] was not found`)
-        }
-        colorReferenceName = tokenToVariableRef(token)
+      const colorToken = sureOptionalReference(color.opacity.referencedTokenId, allTokens)
+      if (colorToken) {
+        colorReferenceName = tokenToVariableRef(colorToken)
       }
-      if (color.opacity.referencedTokenId) {
-        const token = allTokens.get(color.opacity.referencedTokenId)
-        if (!token) {
-          throw new Error(`Can't format color because reference id ${color.opacity.referencedTokenId} [color.opacity.ref] was not found`)
-        }
-        opacityReferenceName = tokenToVariableRef(token)
+      const opacityToken = sureOptionalReference(color.opacity.referencedTokenId, allTokens)
+      if (opacityToken) {
+        opacityReferenceName = tokenToVariableRef(opacityToken)
       }
     }
 
@@ -207,7 +199,7 @@ export class ColorHelper {
   }
 
   // Round half away from zero to a specific number of decimals
-  private static roundToDecimals(value: number, decimals: number): number {
+  static roundToDecimals(value: number, decimals: number): number {
     const multiplier = Math.pow(10, decimals)
     const rounded = Math.round(value * multiplier) / multiplier
 

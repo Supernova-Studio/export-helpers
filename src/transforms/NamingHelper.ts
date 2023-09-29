@@ -95,4 +95,14 @@ export class NamingHelper {
 
     return sentence
   }
+
+  /** Convert any string to CSS variable reference */
+  static nameAsCSSVarReference(name: string): string {
+    return `var(--${name})`
+  }
+
+  /** Conver any string to CSS variable declaration */
+  static nameAsCSSVarDeclaration(name: string): string {
+    return `--${name}`
+  }
 }
