@@ -7,6 +7,12 @@
   </a>
 </p>
 
+<p align="center">
+  <a aria-label="Join the community on Slack" href="https://community.supernova.io">
+    <img alt="" src="./badges/badge-functions.svg">
+  </a>
+</p>
+
 [Supernova](https://supernova.io/) makes generation and delivery of production code from your design systems a breeze. In this repository, you'll find utilities that will help you build the exporters faster. If you are looking for existing exporters, we have [dedicated repository](https://github.com/Supernova-Studio/exporters) for just that. 
 
 ![Header Image](images/exporters.png)

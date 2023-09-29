@@ -27,6 +27,8 @@
         "build:production": "webpack --mode production --config ./webpack.config.main.js",
         "clean": "trash build test",
         "test": "jest",
+        "test:coverage": "npm test -- --coverage",
+        "test:badges": "npm run test:coverage  && jest-coverage-badges-ng --output \"./badges\"",
         "publish-package": "npm run build:production && npm publish --access public"
     },
     "engines": {
@@ -34,7 +36,8 @@
     },
     "dependencies": {
         "@supernova-studio/pulsar-next": "2.0.17",
-        "change-case": "^4.1.2"
+        "change-case": "^4.1.2",
+        "jest-coverage-badges-ng": "^1.0.1"
     },
     "devDependencies": {
         "@ava/typescript": "^4.0.0",

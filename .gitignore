@@ -132,3 +132,8 @@ dist
 # Build
 ./build
 build
+
+# Autobadges
+badge-branches.svg
+badge-lines.svg
+badge-statements.svg
