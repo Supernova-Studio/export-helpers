@@ -1,6 +1,6 @@
 {
     "name": "@supernova-studio/export-helpers",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Supernova.io Exporter Helpers",
     "main": "./build/helpers.js",
     "types": "./build/types/src/index.d.ts",
