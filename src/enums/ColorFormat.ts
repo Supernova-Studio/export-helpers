@@ -24,5 +24,5 @@ export enum ColorFormat {
   /** Selects between hsl and hsla modes based on non-opaque alpha */
   smartHsla,
   /** iOS UIColor created as UIColor(rgb: 0x000000).withAlphaComponent(0.5). Alpha component will be ommited if fully opaque */
-  smartUIColor,
+  smartUIColor
 }

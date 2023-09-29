@@ -16,8 +16,8 @@ import {
   TokenType,
   TypographyToken,
   Unit,
-  UnreachableCaseError,
-} from "@supernova-studio/pulsar-next"
+  UnreachableCaseError
+} from '@supernova-studio/pulsar-next'
 import {
   AnyDimensionTokenValue,
   AnyOptionToken,
@@ -28,10 +28,10 @@ import {
   ColorTokenValue,
   GradientTokenValue,
   ShadowTokenValue,
-  TypographyTokenValue,
-} from "@supernova-studio/pulsar-next/build/sdk-typescript/src/model/tokens/SDKTokenValue"
-import { ColorFormat, ColorHelper } from "../exports"
-import { sureOptionalReference } from "../libs/tokens"
+  TypographyTokenValue
+} from '@supernova-studio/pulsar-next/build/sdk-typescript/src/model/tokens/SDKTokenValue'
+import { ColorFormat, ColorHelper } from '../exports'
+import { sureOptionalReference } from '../libs/tokens'
 
 export type TokenToCSSOptions = {
   /** Whether to allow references to other tokens */
@@ -84,44 +84,60 @@ export class CSSHelper {
       case TokenType.typography:
         return this.typographyTokenValueToCSS((token as TypographyToken).value, allTokens, options)
       default:
-        throw new UnreachableCaseError(token.tokenType, "Unsupported token type for transformation to CSS:")
+        throw new UnreachableCaseError(token.tokenType, 'Unsupported token type for transformation to CSS:')
     }
   }
 
-  static colorTokenValueToCSS(color: ColorTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static colorTokenValueToCSS(
+    color: ColorTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     return ColorHelper.formattedColorOrVariableName(color, allTokens, options)
   }
 
-  static borderTokenValueToCSS(border: BorderTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static borderTokenValueToCSS(
+    border: BorderTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     const data = {
       width: this.dimensionTokenValueToCSS(border.width, allTokens, options),
       style: this.borderStyleToCSS(border.style),
       color: this.colorTokenValueToCSS(border.color, allTokens, options),
-      position: this.borderPositionToCSS(border.position),
+      position: this.borderPositionToCSS(border.position)
     }
     return `${data.width} ${data.style} ${data.color} ${data.position}`
   }
 
-  static gradientTokenValueToCSS(gradients: Array<GradientTokenValue>, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static gradientTokenValueToCSS(
+    gradients: Array<GradientTokenValue>,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     // Export each layer of the gradient separately, then join the CSS background
-    return gradients.map((gradient) => this.gradientLayerToCSS(gradient, allTokens, options)).join(", ")
+    return gradients.map((gradient) => this.gradientLayerToCSS(gradient, allTokens, options)).join(', ')
   }
 
   /** Converts gradient token value to css definition */
-  static gradientLayerToCSS(value: GradientTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    let gradientType = ""
+  static gradientLayerToCSS(
+    value: GradientTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
+    let gradientType = ''
     switch (value.type) {
       case GradientType.linear:
-        gradientType = "linear-gradient(0deg, "
+        gradientType = 'linear-gradient(0deg, '
         break
       case GradientType.radial:
-        gradientType = "radial-gradient(circle, "
+        gradientType = 'radial-gradient(circle, '
         break
       case GradientType.angular:
-        gradientType = "conic-gradient("
+        gradientType = 'conic-gradient('
         break
       default:
-        gradientType = "linear-gradient(0deg, "
+        gradientType = 'linear-gradient(0deg, '
         break
     }
 
@@ -133,26 +149,38 @@ export class CSSHelper {
           options.decimals
         )}%`
       })
-      .join(", ")
+      .join(', ')
 
     return `${gradientType}${stops})`
   }
 
-  static dimensionTokenValueToCSS(dimension: AnyDimensionTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static dimensionTokenValueToCSS(
+    dimension: AnyDimensionTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     return `${ColorHelper.roundToDecimals(dimension.measure, options.decimals)}${this.unitToCSS(dimension.unit)}`
   }
 
-  static shadowTokenValueToCSS(shadows: Array<ShadowTokenValue>, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    return shadows.map((layer) => this.shadowLayerToCSS(layer, allTokens, options)).join(" ") // FIXME: Layers
+  static shadowTokenValueToCSS(
+    shadows: Array<ShadowTokenValue>,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
+    return shadows.map((layer) => this.shadowLayerToCSS(layer, allTokens, options)).join(' ') // FIXME: Layers
   }
 
   static shadowLayerToCSS(value: ShadowTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    return `${value.type === ShadowType.inner ? "inset " : ""}${value.x} ${value.y} ${value.radius} ${
+    return `${value.type === ShadowType.inner ? 'inset ' : ''}${value.x} ${value.y} ${value.radius} ${
       value.spread
     } ${this.colorTokenValueToCSS(value.color, allTokens, options)}`
   }
 
-  static stringTokenValueToCSS(value: AnyStringTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static stringTokenValueToCSS(
+    value: AnyStringTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     const reference = sureOptionalReference(value.referencedTokenId, allTokens, options.allowReferences)
     if (reference) {
       return options.tokenToVariableRef(reference)
@@ -160,7 +188,11 @@ export class CSSHelper {
     return `"${value.text}"`
   }
 
-  static optionTokenValueToCSS(option: AnyOptionTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static optionTokenValueToCSS(
+    option: AnyOptionTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     const reference = sureOptionalReference(option.referencedTokenId, allTokens, options.allowReferences)
     if (reference) {
       return options.tokenToVariableRef(reference)
@@ -172,7 +204,11 @@ export class CSSHelper {
     return `blur(${this.dimensionTokenValueToCSS(blur.radius, allTokens, options)}))`
   }
 
-  static typographyTokenValueToCSS(typography: TypographyTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static typographyTokenValueToCSS(
+    typography: TypographyTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     // Reference full typography token if set
     const reference = sureOptionalReference(typography.referencedTokenId, allTokens, options.allowReferences)
     if (reference) {
@@ -180,10 +216,26 @@ export class CSSHelper {
     }
 
     // Resolve partial references
-    const fontFamilyReference = sureOptionalReference(typography.fontFamily.referencedTokenId, allTokens, options.allowReferences)
-    const fontWeightReference = sureOptionalReference(typography.fontWeight.referencedTokenId, allTokens, options.allowReferences)
-    const decorationReference = sureOptionalReference(typography.textDecoration.referencedTokenId, allTokens, options.allowReferences)
-    const caseReference = sureOptionalReference(typography.textCase.referencedTokenId, allTokens, options.allowReferences)
+    const fontFamilyReference = sureOptionalReference(
+      typography.fontFamily.referencedTokenId,
+      allTokens,
+      options.allowReferences
+    )
+    const fontWeightReference = sureOptionalReference(
+      typography.fontWeight.referencedTokenId,
+      allTokens,
+      options.allowReferences
+    )
+    const decorationReference = sureOptionalReference(
+      typography.textDecoration.referencedTokenId,
+      allTokens,
+      options.allowReferences
+    )
+    const caseReference = sureOptionalReference(
+      typography.textCase.referencedTokenId,
+      allTokens,
+      options.allowReferences
+    )
 
     const data = {
       fontFamily: fontFamilyReference ? options.tokenToVariableRef(fontFamilyReference) : typography.fontFamily.text,
@@ -200,81 +252,81 @@ export class CSSHelper {
         : undefined,
       caps: typography.textCase.value === TextCase.smallCaps,
       fontSize: this.dimensionTokenValueToCSS(typography.fontSize, allTokens, options),
-      lineHeight: this.dimensionTokenValueToCSS(typography.lineHeight, allTokens, options),
+      lineHeight: this.dimensionTokenValueToCSS(typography.lineHeight, allTokens, options)
     }
 
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
     // Example: small-caps bold 24px/1rem "Wingdings"
-    return `${data.caps ? "small-caps " : ""}${data.fontWeight} ${data.fontSize}/${data.lineHeight} ${data.fontFamily}`
+    return `${data.caps ? 'small-caps ' : ''}${data.fontWeight} ${data.fontSize}/${data.lineHeight} ${data.fontFamily}`
   }
 
   static borderStyleToCSS(borderStyle: BorderStyle): string {
     switch (borderStyle) {
       case BorderStyle.dashed:
-        return "dashed"
+        return 'dashed'
       case BorderStyle.dotted:
-        return "dotted"
+        return 'dotted'
       case BorderStyle.solid:
-        return "solid"
+        return 'solid'
       case BorderStyle.groove:
-        return "groove"
+        return 'groove'
       default:
-        return "solid"
+        return 'solid'
     }
   }
 
   static borderPositionToCSS(borderPosition: BorderPosition): string {
     switch (borderPosition) {
       case BorderPosition.center:
-        return "center"
+        return 'center'
       case BorderPosition.inside:
-        return "inside"
+        return 'inside'
       case BorderPosition.outside:
-        return "outside"
+        return 'outside'
       default:
-        return "outside"
+        return 'outside'
     }
   }
 
   static unitToCSS(unit: Unit): string {
     switch (unit) {
       case Unit.percent:
-        return "%"
+        return '%'
       case Unit.pixels:
-        return "px"
+        return 'px'
       case Unit.rem:
-        return "rem"
+        return 'rem'
       case Unit.raw:
-        return ""
+        return ''
       case Unit.ms:
-        return "ms"
+        return 'ms'
       default:
-        return "px"
+        return 'px'
     }
   }
 
   static textCaseToCSS(textCase: TextCase): string {
     switch (textCase) {
       case TextCase.original:
-        return "none"
+        return 'none'
       case TextCase.upper:
-        return "uppercase"
+        return 'uppercase'
       case TextCase.lower:
-        return "lowercase"
+        return 'lowercase'
       case TextCase.camel:
       case TextCase.smallCaps:
-        return "capitalize"
+        return 'capitalize'
     }
   }
 
   static textDecorationToCSS(textDecoration: TextDecoration): string {
     switch (textDecoration) {
       case TextDecoration.original:
-        return "none"
+        return 'none'
       case TextDecoration.underline:
-        return "underline"
+        return 'underline'
       case TextDecoration.strikethrough:
-        return "line-through"
+        return 'line-through'
     }
   }
 }

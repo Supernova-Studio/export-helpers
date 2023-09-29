@@ -1,4 +1,4 @@
-import { Token, TokenGroup } from "@supernova-studio/pulsar-next"
+import { Token, TokenGroup } from '@supernova-studio/pulsar-next'
 import {
   camelCase,
   capitalCase,
@@ -10,16 +10,16 @@ import {
   pascalCase,
   pathCase,
   sentenceCase,
-  snakeCase,
-} from "change-case"
-import { StringCase } from "../enums/StringCase"
+  snakeCase
+} from 'change-case'
+import { StringCase } from '../enums/StringCase'
 
 /** Helps with transformation of strings */
 export class NamingHelper {
   static codeSafeVariableNameForToken(
-    token: Pick<Token, "name">,
+    token: Pick<Token, 'name'>,
     format: StringCase,
-    parent: Pick<TokenGroup, "path" | "isRoot" | "name"> | null,
+    parent: Pick<TokenGroup, 'path' | 'isRoot' | 'name'> | null,
     prefix: string | null
   ): string {
     // Create array with all path segments and token name at the end
@@ -45,10 +45,10 @@ export class NamingHelper {
    * Also fixes additional problems, like the fact that variable name can't start with numbers - variable will be prefixed with "_" in that case
    */
   static codeSafeVariableName(fragments: Array<string> | string, format: StringCase): string {
-    let sentence = typeof fragments === "string" ? fragments : fragments.join(" ")
+    let sentence = typeof fragments === 'string' ? fragments : fragments.join(' ')
 
     // Only allow letters, digits, underscore and hyphen
-    sentence = sentence.replaceAll(/[^a-zA-Z0-9_-]/g, "_")
+    sentence = sentence.replaceAll(/[^a-zA-Z0-9_-]/g, '_')
 
     switch (format) {
       case StringCase.camelCase:
@@ -90,7 +90,7 @@ export class NamingHelper {
 
     // If variable starts with anything but letter, add "_" in front of it
     if (sentence.match(/^[^a-zA-Z]/)) {
-      sentence = "_" + sentence
+      sentence = '_' + sentence
     }
 
     return sentence

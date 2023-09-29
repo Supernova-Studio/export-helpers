@@ -20,5 +20,5 @@ export enum StringCase {
   /** Sentence case (Sentence case) */
   sentenceCase,
   /** Snake case (snake_case) */
-  snakeCase,
+  snakeCase
 }

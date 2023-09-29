@@ -1,6 +1,6 @@
-import { ColorTokenValue, Token } from "@supernova-studio/pulsar-next"
-import { ColorFormat } from "../enums/ColorFormat"
-import { sureOptionalReference } from "../libs/tokens"
+import { ColorTokenValue, Token } from '@supernova-studio/pulsar-next'
+import { ColorFormat } from '../enums/ColorFormat'
+import { sureOptionalReference } from '../libs/tokens'
 
 /** Helps with transformation of strings */
 export class ColorHelper {
@@ -137,7 +137,12 @@ export class ColorHelper {
   }
 
   // Convert color to HSL
-  static colorToHsl(format: ColorFormat, color: { r: number; g: number; b: number }, alpha: number, decimals: number): string {
+  static colorToHsl(
+    format: ColorFormat,
+    color: { r: number; g: number; b: number },
+    alpha: number,
+    decimals: number
+  ): string {
     // Calculate HSL values
     const max = Math.max(color.r, color.g, color.b),
       min = Math.min(color.r, color.g, color.b)
@@ -162,10 +167,9 @@ export class ColorHelper {
 
     let resultingHsl: string
     if (format === ColorFormat.hsla || (format === ColorFormat.smartHsla && alpha < 1)) {
-      resultingHsl = `hsla(${Math.round(h * 360)}%, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%, ${this.roundToDecimals(
-        alpha,
-        decimals
-      )})`
+      resultingHsl = `hsla(${Math.round(h * 360)}%, ${Math.round(s * 100)}%, ${Math.round(
+        l * 100
+      )}%, ${this.roundToDecimals(alpha, decimals)})`
     } else {
       resultingHsl = `hsl(${Math.round(h * 360)}%, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`
     }
@@ -184,20 +188,27 @@ export class ColorHelper {
   }
 
   // Convert color to normalized 0-255 format
-  private static normalizedIntColor(color: ColorTokenValue): { r: number; g: number; b: number } {
+  private static normalizedIntColor(color: ColorTokenValue): {
+    r: number
+    g: number
+    b: number
+  } {
     return {
       r: Math.round(color.color.r),
       g: Math.round(color.color.g),
-      b: Math.round(color.color.b),
+      b: Math.round(color.color.b)
     }
   }
 
   // Convert color to normalized 0-1 format
-  private static normalizedFractionalColor(color: ColorTokenValue, decimals: number = 3): { r: number; g: number; b: number } {
+  private static normalizedFractionalColor(
+    color: ColorTokenValue,
+    decimals: number = 3
+  ): { r: number; g: number; b: number } {
     return {
       r: this.roundToDecimals(color.color.r / 255, decimals),
       g: ColorHelper.roundToDecimals(color.color.g / 255, decimals),
-      b: ColorHelper.roundToDecimals(color.color.b / 255, decimals),
+      b: ColorHelper.roundToDecimals(color.color.b / 255, decimals)
     }
   }
 
@@ -212,6 +223,6 @@ export class ColorHelper {
 
   // Return hex value with leading zero if hex is single digit
   private static pHex(value: number): string {
-    return value.toString(16).padStart(2, "0")
+    return value.toString(16).padStart(2, '0')
   }
 }

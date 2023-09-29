@@ -1,4 +1,9 @@
-import { OutputBinaryFile, OutputCopyRemoteURLFile, OutputFileType, OutputTextFile } from "@supernova-studio/pulsar-next"
+import {
+  OutputBinaryFile,
+  OutputCopyRemoteURLFile,
+  OutputFileType,
+  OutputTextFile
+} from '@supernova-studio/pulsar-next'
 
 /** Helps with creation of output for Supernova export routines */
 export class FileHelper {
@@ -6,7 +11,7 @@ export class FileHelper {
   static createCopyRemoteFile({
     relativePath,
     fileName,
-    url,
+    url
   }: {
     relativePath: string
     fileName: string
@@ -16,17 +21,25 @@ export class FileHelper {
       path: relativePath,
       name: fileName,
       type: OutputFileType.copyRemoteUrl,
-      url: url,
+      url: url
     }
   }
 
   /** Creates a new file that write its content to a specified destination (path + name) */
-  static createTextFile({ relativePath, fileName, content }: { relativePath: string; fileName: string; content: string }): OutputTextFile {
+  static createTextFile({
+    relativePath,
+    fileName,
+    content
+  }: {
+    relativePath: string
+    fileName: string
+    content: string
+  }): OutputTextFile {
     return {
       path: relativePath,
       name: fileName,
       type: OutputFileType.text,
-      content: content,
+      content: content
     }
   }
 
@@ -34,7 +47,7 @@ export class FileHelper {
   static createBinaryFile({
     relativePath,
     fileName,
-    data,
+    data
   }: {
     relativePath: string
     fileName: string
@@ -44,7 +57,7 @@ export class FileHelper {
       path: relativePath,
       name: fileName,
       type: OutputFileType.binary,
-      data: data,
+      data: data
     }
   }
 }
