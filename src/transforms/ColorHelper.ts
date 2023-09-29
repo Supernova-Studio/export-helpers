@@ -16,8 +16,7 @@ export class ColorHelper {
     allTokens: Map<string, Token>,
     format: ColorFormat,
     decimals: number = 3,
-    colorToVariableRef: (token: ColorToken) => string,
-    opacityToVariableRef: (opacity: OpacityToken) => string
+    tokenToVariableRef: (token: Token) => string
   ): string {
     let fullReferenceName: string | undefined = undefined
     let colorReferenceName: string | undefined = undefined
@@ -29,21 +28,21 @@ export class ColorHelper {
       if (!token) {
         throw new Error(`Can't format color because reference id ${color.referencedTokenId} [color.ref] was not found`)
       }
-      fullReferenceName = colorToVariableRef(token as ColorToken)
+      fullReferenceName = tokenToVariableRef(token)
     } else {
       if (color.color.referencedTokenId) {
         const token = allTokens.get(color.color.referencedTokenId)
         if (!token) {
           throw new Error(`Can't format color because reference id ${color.color.referencedTokenId} [color.color.ref] was not found`)
         }
-        colorReferenceName = colorToVariableRef(token as ColorToken)
+        colorReferenceName = tokenToVariableRef(token)
       }
       if (color.opacity.referencedTokenId) {
         const token = allTokens.get(color.opacity.referencedTokenId)
         if (!token) {
           throw new Error(`Can't format color because reference id ${color.opacity.referencedTokenId} [color.opacity.ref] was not found`)
         }
-        opacityReferenceName = opacityToVariableRef(token as OpacityToken)
+        opacityReferenceName = tokenToVariableRef(token)
       }
     }
 
