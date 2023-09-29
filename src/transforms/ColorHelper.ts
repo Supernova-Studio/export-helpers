@@ -1,4 +1,4 @@
-import { ColorToken, ColorTokenValue, OpacityToken, Token } from "@supernova-studio/pulsar-next"
+import { ColorTokenValue, Token } from "@supernova-studio/pulsar-next"
 import { ColorFormat } from "../enums/ColorFormat"
 import { sureOptionalReference } from "../libs/tokens"
 
@@ -15,26 +15,29 @@ export class ColorHelper {
   static formattedColorOrVariableName(
     color: ColorTokenValue,
     allTokens: Map<string, Token>,
-    format: ColorFormat,
-    decimals: number = 3,
-    tokenToVariableRef: (token: Token) => string
+    options: {
+      allowReferences: boolean
+      colorFormat: ColorFormat
+      decimals: number
+      tokenToVariableRef: (token: Token) => string
+    }
   ): string {
     let fullReferenceName: string | undefined = undefined
     let colorReferenceName: string | undefined = undefined
     let opacityReferenceName: string | undefined = undefined
 
     // Check references first
-    const fullToken = sureOptionalReference(color.referencedTokenId, allTokens)
+    const fullToken = sureOptionalReference(color.referencedTokenId, allTokens, options.allowReferences)
     if (fullToken) {
-      fullReferenceName = tokenToVariableRef(fullToken)
+      fullReferenceName = options.tokenToVariableRef(fullToken)
     } else {
-      const colorToken = sureOptionalReference(color.opacity.referencedTokenId, allTokens)
+      const colorToken = sureOptionalReference(color.color.referencedTokenId, allTokens, options.allowReferences)
       if (colorToken) {
-        colorReferenceName = tokenToVariableRef(colorToken)
+        colorReferenceName = options.tokenToVariableRef(colorToken)
       }
-      const opacityToken = sureOptionalReference(color.opacity.referencedTokenId, allTokens)
+      const opacityToken = sureOptionalReference(color.opacity.referencedTokenId, allTokens, options.allowReferences)
       if (opacityToken) {
-        opacityReferenceName = tokenToVariableRef(opacityToken)
+        opacityReferenceName = options.tokenToVariableRef(opacityToken)
       }
     }
 
@@ -45,24 +48,24 @@ export class ColorHelper {
 
     // If there are no references, format the color raw
     if (!fullReferenceName && !colorReferenceName && !opacityReferenceName) {
-      return this.formattedColor(color, format, decimals)
+      return this.formattedColor(color, options.colorFormat, options.decimals)
     }
 
     // If there are partial references, we'll use the references where possible and return the raw format for the rest
-    switch (format) {
+    switch (options.colorFormat) {
       case ColorFormat.rgb:
       case ColorFormat.rgba:
       case ColorFormat.smartRgba:
         return this.colorToRgb(
-          format,
+          options.colorFormat,
           this.normalizedIntColor(color),
           color.opacity.measure,
-          decimals,
+          options.decimals,
           colorReferenceName,
           opacityReferenceName
         )
       default:
-        return this.formattedColor(color, format, decimals)
+        return this.formattedColor(color, options.colorFormat, options.decimals)
     }
   }
 

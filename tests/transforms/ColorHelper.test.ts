@@ -16,6 +16,15 @@ const testColor: ColorTokenValue = {
   },
   referencedTokenId: null,
 }
+const testOptions = {
+  allowReferences: true,
+  colorFormat: ColorFormat.smartRgba,
+  decimals: testDecimals,
+  tokenToVariableRef: (colorToken) => {
+    return `var(--${colorToken.name})`
+  },
+}
+
 const tokens = new Map<string, Token>()
 tokens.set("colorRef", {
   value: testColor,
@@ -100,20 +109,7 @@ test("formattedColorOrVariableName_raw", () => {
     referencedTokenId: null,
   }
 
-  expect(
-    ColorHelper.formattedColorOrVariableName(
-      color,
-      tokens,
-      ColorFormat.smartRgba,
-      testDecimals,
-      (colorToken) => {
-        return `var(--${colorToken.name})`
-      },
-      (opacityToken) => {
-        return `var(--${opacityToken.name})`
-      }
-    )
-  ).toBe("rgba(135, 100, 200, 0.5)")
+  expect(ColorHelper.formattedColorOrVariableName(color, tokens, testOptions)).toBe("rgba(135, 100, 200, 0.5)")
 })
 
 test("formattedColorOrVariableName_fullReference", () => {
@@ -132,20 +128,7 @@ test("formattedColorOrVariableName_fullReference", () => {
     referencedTokenId: "colorRef",
   }
 
-  expect(
-    ColorHelper.formattedColorOrVariableName(
-      color,
-      tokens,
-      ColorFormat.smartRgba,
-      testDecimals,
-      (colorToken) => {
-        return `var(--${colorToken.name})`
-      },
-      (opacityToken) => {
-        return `var(--${opacityToken.name})`
-      }
-    )
-  ).toBe("var(--colorRef)")
+  expect(ColorHelper.formattedColorOrVariableName(color, tokens, testOptions)).toBe("var(--colorRef)")
 })
 
 test("formattedColorOrVariableName_partialColorReference", () => {
@@ -157,20 +140,7 @@ test("formattedColorOrVariableName_partialColorReference", () => {
     },
   }
 
-  expect(
-    ColorHelper.formattedColorOrVariableName(
-      color,
-      tokens,
-      ColorFormat.smartRgba,
-      testDecimals,
-      (colorToken) => {
-        return `var(--${colorToken.name})`
-      },
-      (opacityToken) => {
-        return `var(--${opacityToken.name})`
-      }
-    )
-  ).toBe("rgba(var(--colorRef), 0.5)")
+  expect(ColorHelper.formattedColorOrVariableName(color, tokens, testOptions)).toBe("rgba(var(--colorRef), 0.5)")
 })
 
 test("formattedColorOrVariableName_partialOpacityReference", () => {
@@ -182,20 +152,7 @@ test("formattedColorOrVariableName_partialOpacityReference", () => {
     },
   }
 
-  expect(
-    ColorHelper.formattedColorOrVariableName(
-      color,
-      tokens,
-      ColorFormat.smartRgba,
-      testDecimals,
-      (colorToken) => {
-        return `var(--${colorToken.name})`
-      },
-      (opacityToken) => {
-        return `var(--${opacityToken.name})`
-      }
-    )
-  ).toBe("rgba(135, 100, 200, var(--opacityRef))")
+  expect(ColorHelper.formattedColorOrVariableName(color, tokens, testOptions)).toBe("rgba(135, 100, 200, var(--opacityRef))")
 })
 
 test("formattedColorOrVariableName_partialBothReferences", () => {
@@ -211,18 +168,5 @@ test("formattedColorOrVariableName_partialBothReferences", () => {
     },
   }
 
-  expect(
-    ColorHelper.formattedColorOrVariableName(
-      color,
-      tokens,
-      ColorFormat.smartRgba,
-      testDecimals,
-      (colorToken) => {
-        return `var(--${colorToken.name})`
-      },
-      (opacityToken) => {
-        return `var(--${opacityToken.name})`
-      }
-    )
-  ).toBe("rgba(var(--colorRef), var(--opacityRef))")
+  expect(ColorHelper.formattedColorOrVariableName(color, tokens, testOptions)).toBe("rgba(var(--colorRef), var(--opacityRef))")
 })

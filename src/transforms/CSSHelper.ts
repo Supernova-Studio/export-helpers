@@ -7,7 +7,9 @@ import {
   BorderToken,
   ColorToken,
   GradientToken,
+  GradientType,
   ShadowToken,
+  ShadowType,
   TextCase,
   TextDecoration,
   Token,
@@ -52,7 +54,7 @@ export class CSSHelper {
       case TokenType.border:
         return this.borderTokenValueToCSS((token as BorderToken).value, allTokens, options)
       case TokenType.gradient:
-        return this.gradientsTokenValueToCSS((token as GradientToken).value, allTokens, options)
+        return this.gradientTokenValueToCSS((token as GradientToken).value, allTokens, options)
       case TokenType.dimension:
       case TokenType.size:
       case TokenType.space:
@@ -67,7 +69,7 @@ export class CSSHelper {
       case TokenType.zIndex:
         return this.dimensionTokenValueToCSS((token as AnyDimensionToken).value, allTokens, options)
       case TokenType.shadow:
-        return this.shadowsTokenValueToCSS((token as ShadowToken).value, allTokens, options)
+        return this.shadowTokenValueToCSS((token as ShadowToken).value, allTokens, options)
       case TokenType.fontWeight:
       case TokenType.fontFamily:
       case TokenType.productCopy:
@@ -87,7 +89,7 @@ export class CSSHelper {
   }
 
   static colorTokenValueToCSS(color: ColorTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    return ColorHelper.formattedColorOrVariableName(color, allTokens, options.colorFormat, options.decimals, options.tokenToVariableRef)
+    return ColorHelper.formattedColorOrVariableName(color, allTokens, options)
   }
 
   static borderTokenValueToCSS(border: BorderTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
@@ -100,20 +102,58 @@ export class CSSHelper {
     return `${data.width} ${data.style} ${data.color} ${data.position}`
   }
 
-  static gradientsTokenValueToCSS(gradients: Array<GradientTokenValue>, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    return "WIP"
+  static gradientTokenValueToCSS(gradients: Array<GradientTokenValue>, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+    // Export each layer of the gradient separately, then join the CSS background
+    return gradients.map((gradient) => this.gradientLayerToCSS(gradient, allTokens, options)).join(", ")
+  }
+
+  /** Converts gradient token value to css definition */
+  static gradientLayerToCSS(value: GradientTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+    let gradientType = ""
+    switch (value.type) {
+      case GradientType.linear:
+        gradientType = "linear-gradient(0deg, "
+        break
+      case GradientType.radial:
+        gradientType = "radial-gradient(circle, "
+        break
+      case GradientType.angular:
+        gradientType = "conic-gradient("
+        break
+      default:
+        gradientType = "linear-gradient(0deg, "
+        break
+    }
+
+    // Example: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    const stops = value.stops
+      .map((stop) => {
+        return `${this.colorTokenValueToCSS(stop.color, allTokens, options)} ${ColorHelper.roundToDecimals(
+          stop.position * 100,
+          options.decimals
+        )}%`
+      })
+      .join(", ")
+
+    return `${gradientType}${stops})`
   }
 
   static dimensionTokenValueToCSS(dimension: AnyDimensionTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
     return `${ColorHelper.roundToDecimals(dimension.measure, options.decimals)}${this.unitToCSS(dimension.unit)}`
   }
 
-  static shadowsTokenValueToCSS(shadows: Array<ShadowTokenValue>, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    return "WIP"
+  static shadowTokenValueToCSS(shadows: Array<ShadowTokenValue>, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+    return shadows.map((layer) => this.shadowLayerToCSS(layer, allTokens, options)).join(" ") // FIXME: Layers
+  }
+
+  static shadowLayerToCSS(value: ShadowTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+    return `${value.type === ShadowType.inner ? "inset " : ""}${value.x} ${value.y} ${value.radius} ${
+      value.spread
+    } ${this.colorTokenValueToCSS(value.color, allTokens, options)}`
   }
 
   static stringTokenValueToCSS(value: AnyStringTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    const reference = sureOptionalReference(value.referencedTokenId, allTokens)
+    const reference = sureOptionalReference(value.referencedTokenId, allTokens, options.allowReferences)
     if (reference) {
       return options.tokenToVariableRef(reference)
     }
@@ -121,7 +161,7 @@ export class CSSHelper {
   }
 
   static optionTokenValueToCSS(option: AnyOptionTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    const reference = sureOptionalReference(option.referencedTokenId, allTokens)
+    const reference = sureOptionalReference(option.referencedTokenId, allTokens, options.allowReferences)
     if (reference) {
       return options.tokenToVariableRef(reference)
     }
@@ -134,16 +174,16 @@ export class CSSHelper {
 
   static typographyTokenValueToCSS(typography: TypographyTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
     // Reference full typography token if set
-    const reference = sureOptionalReference(typography.referencedTokenId, allTokens)
+    const reference = sureOptionalReference(typography.referencedTokenId, allTokens, options.allowReferences)
     if (reference) {
       return options.tokenToVariableRef(reference)
     }
 
     // Resolve partial references
-    const fontFamilyReference = sureOptionalReference(typography.fontFamily.referencedTokenId, allTokens)
-    const fontWeightReference = sureOptionalReference(typography.fontWeight.referencedTokenId, allTokens)
-    const decorationReference = sureOptionalReference(typography.textDecoration.referencedTokenId, allTokens)
-    const caseReference = sureOptionalReference(typography.textCase.referencedTokenId, allTokens)
+    const fontFamilyReference = sureOptionalReference(typography.fontFamily.referencedTokenId, allTokens, options.allowReferences)
+    const fontWeightReference = sureOptionalReference(typography.fontWeight.referencedTokenId, allTokens, options.allowReferences)
+    const decorationReference = sureOptionalReference(typography.textDecoration.referencedTokenId, allTokens, options.allowReferences)
+    const caseReference = sureOptionalReference(typography.textCase.referencedTokenId, allTokens, options.allowReferences)
 
     const data = {
       fontFamily: fontFamilyReference ? options.tokenToVariableRef(fontFamilyReference) : typography.fontFamily.text,
@@ -163,12 +203,12 @@ export class CSSHelper {
       lineHeight: this.dimensionTokenValueToCSS(typography.lineHeight, allTokens, options),
     }
 
-    // small-caps bold 24px/1 "Inter"
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
+    // Example: small-caps bold 24px/1rem "Wingdings"
     return `${data.caps ? "small-caps " : ""}${data.fontWeight} ${data.fontSize}/${data.lineHeight} ${data.fontFamily}`
   }
 
-  private static borderStyleToCSS(borderStyle: BorderStyle): string {
+  static borderStyleToCSS(borderStyle: BorderStyle): string {
     switch (borderStyle) {
       case BorderStyle.dashed:
         return "dashed"
@@ -183,7 +223,7 @@ export class CSSHelper {
     }
   }
 
-  private static borderPositionToCSS(borderPosition: BorderPosition): string {
+  static borderPositionToCSS(borderPosition: BorderPosition): string {
     switch (borderPosition) {
       case BorderPosition.center:
         return "center"
@@ -196,7 +236,7 @@ export class CSSHelper {
     }
   }
 
-  private static unitToCSS(unit: Unit): string {
+  static unitToCSS(unit: Unit): string {
     switch (unit) {
       case Unit.percent:
         return "%"
@@ -213,7 +253,7 @@ export class CSSHelper {
     }
   }
 
-  private static textCaseToCSS(textCase: TextCase): string {
+  static textCaseToCSS(textCase: TextCase): string {
     switch (textCase) {
       case TextCase.original:
         return "none"
@@ -227,7 +267,7 @@ export class CSSHelper {
     }
   }
 
-  private static textDecorationToCSS(textDecoration: TextDecoration): string {
+  static textDecorationToCSS(textDecoration: TextDecoration): string {
     switch (textDecoration) {
       case TextDecoration.original:
         return "none"

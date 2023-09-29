@@ -13,4 +13,5 @@ export function sureOptionalReference(
   if (!token) {
     throw new Error(`Trying to retrieve unknown referenced token ${referenceId}`)
   }
+  return token
 }
