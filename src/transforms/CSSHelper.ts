@@ -46,7 +46,11 @@ export type TokenToCSSOptions = {
 
 /** Helps with transformation of tokens to CSS values */
 export class CSSHelper {
-  static tokenToCSS(token: Token, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
+  static tokenToCSS(
+    token: Pick<Token, 'tokenType'>,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
     /** Use subroutines to convert specific token types to different css representations. Many tokens are of the same type */
     switch (token.tokenType) {
       case TokenType.color:
@@ -101,13 +105,17 @@ export class CSSHelper {
     allTokens: Map<string, Token>,
     options: TokenToCSSOptions
   ): string {
+    const reference = sureOptionalReference(border.referencedTokenId, allTokens, options.allowReferences)
+    if (reference) {
+      return options.tokenToVariableRef(reference)
+    }
     const data = {
       width: this.dimensionTokenValueToCSS(border.width, allTokens, options),
       style: this.borderStyleToCSS(border.style),
       color: this.colorTokenValueToCSS(border.color, allTokens, options),
-      position: this.borderPositionToCSS(border.position)
+      position: this.borderPositionToCSS(border.position) // Not used for now
     }
-    return `${data.width} ${data.style} ${data.color} ${data.position}`
+    return `${data.width} ${data.style} ${data.color}`
   }
 
   static gradientTokenValueToCSS(
@@ -125,6 +133,10 @@ export class CSSHelper {
     allTokens: Map<string, Token>,
     options: TokenToCSSOptions
   ): string {
+    const reference = sureOptionalReference(value.referencedTokenId, allTokens, options.allowReferences)
+    if (reference) {
+      return options.tokenToVariableRef(reference)
+    }
     let gradientType = ''
     switch (value.type) {
       case GradientType.linear:
@@ -159,6 +171,10 @@ export class CSSHelper {
     allTokens: Map<string, Token>,
     options: TokenToCSSOptions
   ): string {
+    const reference = sureOptionalReference(dimension.referencedTokenId, allTokens, options.allowReferences)
+    if (reference) {
+      return options.tokenToVariableRef(reference)
+    }
     return `${ColorHelper.roundToDecimals(dimension.measure, options.decimals)}${this.unitToCSS(dimension.unit)}`
   }
 
@@ -167,13 +183,17 @@ export class CSSHelper {
     allTokens: Map<string, Token>,
     options: TokenToCSSOptions
   ): string {
-    return shadows.map((layer) => this.shadowLayerToCSS(layer, allTokens, options)).join(' ') // FIXME: Layers
+    return shadows.map((layer) => this.shadowLayerToCSS(layer, allTokens, options)).join(', ')
   }
 
   static shadowLayerToCSS(value: ShadowTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    return `${value.type === ShadowType.inner ? 'inset ' : ''}${value.x} ${value.y} ${value.radius} ${
+    const reference = sureOptionalReference(value.referencedTokenId, allTokens, options.allowReferences)
+    if (reference) {
+      return options.tokenToVariableRef(reference)
+    }
+    return `${value.type === ShadowType.inner ? 'inset ' : ''}${value.x}px ${value.y}px ${value.radius}px ${
       value.spread
-    } ${this.colorTokenValueToCSS(value.color, allTokens, options)}`
+    }px ${this.colorTokenValueToCSS(value.color, allTokens, options)}`
   }
 
   static stringTokenValueToCSS(
@@ -201,7 +221,11 @@ export class CSSHelper {
   }
 
   static blurTokenValueToCSS(blur: BlurTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
-    return `blur(${this.dimensionTokenValueToCSS(blur.radius, allTokens, options)}))`
+    const reference = sureOptionalReference(blur.referencedTokenId, allTokens, options.allowReferences)
+    if (reference) {
+      return options.tokenToVariableRef(reference)
+    }
+    return `blur(${this.dimensionTokenValueToCSS(blur.radius, allTokens, options)})`
   }
 
   static typographyTokenValueToCSS(
@@ -257,7 +281,9 @@ export class CSSHelper {
 
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
     // Example: small-caps bold 24px/1rem "Wingdings"
-    return `${data.caps ? 'small-caps ' : ''}${data.fontWeight} ${data.fontSize}/${data.lineHeight} ${data.fontFamily}`
+    return `${data.caps ? 'small-caps ' : ''}\"${data.fontWeight}\" ${data.fontSize}/${data.lineHeight} \"${
+      data.fontFamily
+    }\"`
   }
 
   static borderStyleToCSS(borderStyle: BorderStyle): string {
