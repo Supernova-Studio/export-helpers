@@ -1,24 +1,24 @@
-export enum StringCase {
+export const enum StringCase {
   /** Camel case (camelCase) */
-  camelCase,
+  camelCase = 'camelCase',
   /** Capital case (Capital Case) */
-  capitalCase,
+  capitalCase = 'capitalCase',
   /** Constant case (CONSTANT_CASE) */
-  constantCase,
+  constantCase = 'constantCase',
   /** Dot case (dot.case) */
-  dotCase,
+  dotCase = 'dotCase',
   /** Header case (Header-Case) */
-  headerCase,
+  headerCase = 'headerCase',
   /** No case (no case) */
-  noCase,
+  noCase = 'noCase',
   /** Param case (param-case) */
-  paramCase,
+  paramCase = 'paramCase',
   /** Pascal case (PascalCase) */
-  pascalCase,
+  pascalCase = 'pascalCase',
   /** Path case (path/case) */
-  pathCase,
+  pathCase = 'pathCase',
   /** Sentence case (Sentence case) */
-  sentenceCase,
+  sentenceCase = 'sentenceCase',
   /** Snake case (snake_case) */
-  snakeCase
+  snakeCase = 'snakeCase'
 }
