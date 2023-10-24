@@ -23,7 +23,7 @@ import {
   Token,
   TypographyToken,
   Unit
-} from '@supernova-studio/pulsar-next'
+} from '@supernovaio/sdk-exporters'
 import {
   AnyOptionToken,
   AnyOptionTokenValue,
@@ -33,8 +33,9 @@ import {
   ShadowTokenValue,
   TextCaseTokenValue,
   TypographyTokenValue
-} from '@supernova-studio/pulsar-next/build/sdk-typescript/src/model/tokens/SDKTokenValue'
-import { ColorFormat, ColorHelper, CSSHelper, NamingHelper, StringCase } from '../../src/exports'
+} from '@supernovaio/sdk-exporters'
+import { ColorFormat } from '../../src/enums/ColorFormat'
+import { CSSHelper } from '../../src/transforms/CSSHelper'
 
 /** Base formattable color - no refs */
 const testColor: ColorTokenValue = {

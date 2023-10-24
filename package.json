@@ -1,7 +1,7 @@
 {
-    "name": "@supernova-studio/export-helpers",
-    "version": "0.0.18",
-    "description": "Supernova.io Exporter Helpers",
+    "name": "@supernovaio/export-helpers",
+    "version": "0.1.0",
+    "description": "Supernova.io Export Helpers and Utilities",
     "main": "./build/helpers.js",
     "types": "./build/types/src/index.d.ts",
     "license": "MIT",
@@ -36,7 +36,7 @@
         "node": ">=8.9"
     },
     "dependencies": {
-        "@supernova-studio/pulsar-next": "2.0.21",
+        "@supernovaio/sdk-exporters": "2.0.1",
         "change-case": "^4.1.2"
     },
     "devDependencies": {

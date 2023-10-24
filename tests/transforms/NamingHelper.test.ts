@@ -1,4 +1,5 @@
-import { NamingHelper, StringCase } from '../../src/exports'
+import { NamingHelper } from '../../src/transforms/NamingHelper'
+import { StringCase } from '../../src/enums/StringCase'
 
 test('codeSafeVariableName_autosplit_1', () => {
   const string = 'test variable'

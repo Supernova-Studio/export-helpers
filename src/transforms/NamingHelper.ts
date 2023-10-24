@@ -1,4 +1,4 @@
-import { Token, TokenGroup } from '@supernova-studio/pulsar-next'
+import { Token, TokenGroup } from '@supernovaio/sdk-exporters'
 import {
   camelCase,
   capitalCase,

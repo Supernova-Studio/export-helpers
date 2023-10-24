@@ -1,4 +1,4 @@
-import { Token } from '@supernova-studio/pulsar-next'
+import { Token } from '@supernovaio/sdk-exporters'
 
 /** Finds reference and makes sure it exists if reference was provided. If null was provided, null is on the output as well to make seeking outside few lines smaller */
 export function sureOptionalReference(

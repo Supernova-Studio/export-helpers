@@ -1,4 +1,4 @@
-import { ColorTokenValue, Token } from '@supernova-studio/pulsar-next'
+import { ColorTokenValue, Token } from '@supernovaio/sdk-exporters'
 import { ColorFormat } from '../enums/ColorFormat'
 import { sureOptionalReference } from '../libs/tokens'
 

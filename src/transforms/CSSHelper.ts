@@ -17,7 +17,7 @@ import {
   TypographyToken,
   Unit,
   UnreachableCaseError
-} from '@supernova-studio/pulsar-next'
+} from '@supernovaio/sdk-exporters'
 import {
   AnyDimensionTokenValue,
   AnyOptionToken,
@@ -29,9 +29,10 @@ import {
   GradientTokenValue,
   ShadowTokenValue,
   TypographyTokenValue
-} from '@supernova-studio/pulsar-next/build/sdk-typescript/src/model/tokens/SDKTokenValue'
-import { ColorFormat, ColorHelper } from '../exports'
+} from '@supernovaio/sdk-exporters'
+import { ColorFormat } from '../enums/ColorFormat'
 import { sureOptionalReference } from '../libs/tokens'
+import { ColorHelper } from './ColorHelper'
 
 export type TokenToCSSOptions = {
   /** Whether to allow references to other tokens */

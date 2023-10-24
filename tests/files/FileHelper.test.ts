@@ -1,5 +1,5 @@
-import { OutputFileType } from '@supernova-studio/pulsar-next'
-import { FileHelper } from '../../src/exports'
+import { OutputFileType } from '@supernovaio/sdk-exporters'
+import { FileHelper } from '../../src/files/FileHelper'
 
 test('createTextFile', () => {
   expect(
