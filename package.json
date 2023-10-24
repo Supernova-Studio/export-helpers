@@ -1,7 +1,7 @@
 {
-    "name": "@supernova-studio/export-helpers",
+    "name": "@supernovaio/export-helpers",
     "version": "0.1.0",
-    "description": "Supernova.io Exporter Helpers",
+    "description": "Supernova.io Export Helpers and Utilities",
     "main": "./build/helpers.js",
     "types": "./build/types/src/index.d.ts",
     "license": "MIT",
