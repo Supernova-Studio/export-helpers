@@ -1,9 +1,4 @@
-import {
-  OutputBinaryFile,
-  OutputCopyRemoteURLFile,
-  OutputFileType,
-  OutputTextFile
-} from '@supernova-studio/pulsar-next'
+import { OutputBinaryFile, OutputCopyRemoteURLFile, OutputFileType, OutputTextFile } from '@supernovaio/sdk-exporters'
 
 /** Helps with creation of output for Supernova export routines */
 export class FileHelper {

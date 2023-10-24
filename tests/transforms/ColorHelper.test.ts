@@ -1,5 +1,6 @@
-import { ColorToken, ColorTokenValue, OpacityToken, Token, Unit } from '@supernova-studio/pulsar-next'
-import { ColorFormat, ColorHelper, NamingHelper, StringCase } from '../../src/exports'
+import { ColorToken, ColorTokenValue, OpacityToken, Token, Unit } from '@supernovaio/sdk-exporters'
+import { ColorFormat } from '../../src/enums/ColorFormat'
+import { ColorHelper } from '../../src/transforms/ColorHelper'
 
 const testDecimals = 3
 const testColor: ColorTokenValue = {
