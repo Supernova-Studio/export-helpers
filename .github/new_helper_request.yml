@@ -1,0 +1,16 @@
+name: "⭐ New Helper Request"
+description: Suggest a new helper that everyone writing exporters will benefit from
+labels: ["helper", "feature request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping us making the developer experience better by providing your idea for improvement! Please update the title above to reflect your idea consistently.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        Please provide the description of your idea. Consider adding code examples to explain it better. If you already have specific implementation in mind, please provide it as well.
+    validations:
+      required: true

@@ -1,22 +1,20 @@
 {
     "name": "@supernovaio/export-helpers",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Supernova.io Export Helpers and Utilities",
     "main": "./build/helpers.js",
     "types": "./build/types/src/index.d.ts",
     "license": "MIT",
     "keywords": [
         "Supernova",
-        "Design Systems",
         "Supernovaio",
         "SDK",
-        "Design Tokens",
+        "Utilities",
+        "Helpers",
+        "Design Systems",
         "Tokens",
         "Assets",
-        "Components",
-        "Documentation",
-        "Markdown",
-        "CMS"
+        "Components"
     ],
     "files": [
         "build"

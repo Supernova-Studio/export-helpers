@@ -22,15 +22,15 @@
 To use the library in your exporters, install it through NPM:
 
 ```
-npm install --save @supernova-studio/export-helpers
+npm install --save @supernovaio/export-helpers
 ```
 
-## Using the utilities
+## Using the Utilities
 
 To use the utilities, simply import them from the library:
 
 ```
-import { TokenUtils } from "@supernova-studio/export-helpers"
+import { TokenUtils } from "@supernovaio/export-helpers"
 ```
 
 You can find the full list of available utilities [here](./docs/helpers.md).
@@ -38,7 +38,7 @@ You can find the full list of available utilities [here](./docs/helpers.md).
 
 ## Help Us Build a Better Product
 
-Your input is invaluable to us—whether it's positive or negative. If you have:
+If you have:
 
 - Suggestions for improving the developer experience
 - Encountered any bugs
@@ -48,4 +48,4 @@ or you'd like to contribute with your own helper please open a new [GitHub issue
 
 ## Community
 
-We have an active [Slack community](https://community.supernova.io) where both the Supernova team and your fellow developers exchange ideas and engage in discussions. Come join us to shape the future of design systems!
+We have an active [Slack community](https://community.supernova.io) where both the Supernova team and your fellow developers exchange ideas and engage in discussions. Come join us to shape the future of design systems and automatic code delivery!
