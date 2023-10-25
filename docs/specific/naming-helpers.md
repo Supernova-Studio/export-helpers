@@ -7,10 +7,10 @@ This document outlines naming helpers available.
 Import the helper from the library:
 
 ```typescript
-import { NamingUtils } from "@supernovaio/export-helpers";
+import { NamingHelper } from "@supernovaio/export-helpers";
 ```
 
-And use any static method available on the helper object `NamingUtils`.
+And use any static method available on the helper object `NamingHelper`.
 
 ## Available methods
 
