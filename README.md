@@ -1,10 +1,6 @@
 <p align="center">
-  <a aria-label="Join the community on Slack" href="https://community.supernova.io">
-    <img alt="" src="https://img.shields.io/badge/Join%20the%20community-black.svg?style=for-the-badge&logo=Slack">
-  </a>
-  <a aria-label="Follow Supernova on Twitter" href="https://twitter.com/supernova_io">
-    <img alt="" src="https://img.shields.io/badge/Follow%20@supernova-black.svg?style=for-the-badge&logo=Twitter">
-  </a>
+  <a aria-label="Join the community on Slack" href="https://community.supernova.io"><img alt="" src="https://img.shields.io/badge/Join%20the%20community-black.svg?style=for-the-badge&logo=Slack"></a>
+  <a aria-label="Follow Supernova on Twitter" href="https://twitter.com/supernova_io"><img alt="" src="https://img.shields.io/badge/Follow%20@supernova-black.svg?style=for-the-badge&logo=Twitter"></a>
 </p>
 
 <p align="center">
