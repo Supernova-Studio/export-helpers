@@ -5,12 +5,20 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping us making the developer experience better by providing your idea for improvement! Please update the title above to reflect your idea consistently.
+        Thank you for helping us making the developer experience better by providing your idea for improvement! Please update the title above to describe your idea at glance.
   - type: textarea
     id: description
     attributes:
       label: Description
       description: |
-        Please provide the description of your idea. Consider adding code examples to explain it better. If you already have specific implementation in mind, please provide it as well.
+        Please provide the detailed description of your idea. 
     validations:
       required: true
+  - type: textarea
+    id: code-example
+    attributes:
+      label: Code Example
+      description: |
+        Consider adding code examples to explain it better. If you already have specific implementation in mind, please provide it as well.
+    validations:
+      required: false
