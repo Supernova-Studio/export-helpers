@@ -1,6 +1,4 @@
-import { ColorTokenValue, Token, TokenType } from '@supernova-studio/pulsar-next'
-import { ColorFormat } from '../enums/ColorFormat'
-import { sureOptionalReference } from '../libs/tokens'
+import { TokenType } from '@supernovaio/sdk-exporters'
 
 /** Contains useful static data that can be iterated over */
 export class Iterators {
