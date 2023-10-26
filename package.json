@@ -1,6 +1,6 @@
 {
     "name": "@supernovaio/export-helpers",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "Supernova.io Export Helpers and Utilities",
     "main": "./build/helpers.js",
     "types": "./build/types/src/index.d.ts",
@@ -34,10 +34,11 @@
         "node": ">=8.9"
     },
     "dependencies": {
-        "@supernovaio/sdk-exporters": "2.0.1",
+        "@supernovaio/sdk-exporters": "2.0.4",
         "change-case": "^4.1.2"
     },
     "devDependencies": {
+        "@supernovaio/sdk": "2.0.4",
         "@ava/typescript": "^4.0.0",
         "@istanbuljs/nyc-config-typescript": "latest",
         "@types/jest": "^29.5.5",

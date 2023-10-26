@@ -14,7 +14,7 @@ import {
 } from 'change-case'
 import { StringCase } from '../enums/StringCase'
 
-/** Helps with transformation of strings */
+/** A utility class to help with transformation of different strings to code-safe names */
 export class NamingHelper {
   static codeSafeVariableNameForToken(
     token: Pick<Token, 'name'>,

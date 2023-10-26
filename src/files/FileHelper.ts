@@ -1,6 +1,6 @@
 import { OutputBinaryFile, OutputCopyRemoteURLFile, OutputFileType, OutputTextFile } from '@supernovaio/sdk-exporters'
 
-/** Helps with creation of output for Supernova export routines */
+/** A utility class to help with creation of files for Supernova export routines */
 export class FileHelper {
   /** Creates a new file that will copy its content from a remote URL to a specified destination (path + name) */
   static createCopyRemoteFile({

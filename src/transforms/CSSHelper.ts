@@ -45,7 +45,7 @@ export type TokenToCSSOptions = {
   tokenToVariableRef: (token: Token) => string
 }
 
-/** Helps with transformation of tokens to CSS values */
+/** A utility class to help with transformation of tokens and Supernova token-like values to various formats */
 export class CSSHelper {
   static tokenToCSS(
     token: Pick<Token, 'tokenType'>,
