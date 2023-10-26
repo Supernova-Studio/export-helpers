@@ -1,6 +1,7 @@
 /*
  * Helpers
  */
+export { NetworkHelper } from './network/NetworkHelper'
 export { NamingHelper } from './transforms/NamingHelper'
 export { ColorHelper } from './transforms/ColorHelper'
 export { FileHelper } from './files/FileHelper'

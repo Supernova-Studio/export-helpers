@@ -2,7 +2,7 @@ import { ColorTokenValue, Token } from '@supernovaio/sdk-exporters'
 import { ColorFormat } from '../enums/ColorFormat'
 import { sureOptionalReference } from '../libs/tokens'
 
-/** Helps with transformation of strings */
+/** A utility class to help with transformation of colors to various formats */
 export class ColorHelper {
   /**
    * Behaves like a normal color formatter. However, if the color is reference, it returns the variable name instead of the formatted color.
