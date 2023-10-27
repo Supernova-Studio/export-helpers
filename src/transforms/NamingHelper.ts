@@ -88,6 +88,11 @@ export class NamingHelper {
         break
     }
 
+    // Remove all underscores if format is not snake_case, since the library has unintended behavior with numberic values in this case
+    if (format !== StringCase.snakeCase && format !== StringCase.constantCase) {
+      sentence = sentence.replaceAll('_', '')
+    }
+
     // If variable starts with anything but letter, add "_" in front of it
     if (sentence.match(/^[^a-zA-Z]/)) {
       sentence = '_' + sentence

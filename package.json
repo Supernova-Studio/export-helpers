@@ -35,7 +35,7 @@
     },
     "dependencies": {
         "@supernovaio/sdk-exporters": "2.0.4",
-        "change-case": "^4.1.2"
+        "change-case": "4.1.2"
     },
     "devDependencies": {
         "@supernovaio/sdk": "2.0.4",
