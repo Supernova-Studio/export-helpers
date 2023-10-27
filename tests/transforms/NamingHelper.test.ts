@@ -110,3 +110,18 @@ test('codeSafeVariableNameForToken_case_2', () => {
     'brand/red/red1000'
   )
 })
+
+test('codeSafeVariableNameForToken_case_3', () => {
+  const string = 'test variable'
+  const token = {
+    name: 'red 1000'
+  }
+  const tokenGroup = {
+    name: 'Red',
+    path: ['Brand'],
+    isRoot: false
+  }
+  expect(NamingHelper.codeSafeVariableNameForToken(token, StringCase.camelCase, tokenGroup, null)).toBe(
+    'brandRedRed1000'
+  )
+})

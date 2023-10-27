@@ -1,4 +1,4 @@
-export const enum ColorFormat {
+export enum ColorFormat {
   /** RGB - rgb(r,g,b). Ignores alpha */
   rgb = 'rgb',
   /** RGBA - rgba(r,g,b,a). Always includes alpha */

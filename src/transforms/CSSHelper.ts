@@ -282,9 +282,13 @@ export class CSSHelper {
 
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
     // Example: small-caps bold 24px/1rem "Wingdings"
-    return `${data.caps ? 'small-caps ' : ''}\"${data.fontWeight}\" ${data.fontSize}/${data.lineHeight} \"${
-      data.fontFamily
-    }\"`
+    const fragmentCaps = data.caps ? 'small-caps ' : ''
+    const fragmentWeight = fontWeightReference ? data.fontWeight : `\"${data.fontWeight}\"`
+    const fragmentSize = data.fontSize
+    const fragmentLineHeight = data.lineHeight
+    const fragmentFamily = fontFamilyReference ? data.fontFamily : `\"${data.fontFamily}\"`
+
+    return `${fragmentCaps}${fragmentWeight} ${fragmentSize}/${fragmentLineHeight} ${fragmentFamily}`
   }
 
   static borderStyleToCSS(borderStyle: BorderStyle): string {

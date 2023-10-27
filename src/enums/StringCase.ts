@@ -1,4 +1,4 @@
-export const enum StringCase {
+export enum StringCase {
   /** Camel case (camelCase) */
   camelCase = 'camelCase',
   /** Capital case (Capital Case) */
