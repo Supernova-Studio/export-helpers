@@ -1,6 +1,6 @@
 {
     "name": "@supernovaio/export-helpers",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "Supernova.io Export Helpers and Utilities",
     "main": "./build/helpers.js",
     "types": "./build/types/src/index.d.ts",
@@ -27,7 +27,7 @@
         "test": "jest",
         "test:coverage": "npm test -- --coverage",
         "test:badges": "npm run test:coverage  && jest-coverage-badges-ng --output \"./badges\"",
-        "publish-package": "npm run build:production && npm publish --access public",
+        "publish-package": "npm run build:production && npm run test && npm publish --access public",
         "pretty": "prettier --write \"./**/*.{ts,js}\""
     },
     "engines": {

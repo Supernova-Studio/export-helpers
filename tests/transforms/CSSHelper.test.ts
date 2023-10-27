@@ -9,6 +9,8 @@ import {
   ColorTokenValue,
   DimensionToken,
   DimensionTokenValue,
+  FontFamilyToken,
+  FontWeightToken,
   GradientStopValue,
   GradientToken,
   GradientTokenValue,
@@ -34,6 +36,10 @@ import {
   TextCaseTokenValue,
   TypographyTokenValue
 } from '@supernovaio/sdk-exporters'
+import {
+  FontFamilyTokenValue,
+  FontWeightTokenValue
+} from '@supernovaio/sdk-exporters/build/sdk-typescript/src/model/tokens/SDKTokenValue'
 import { ColorFormat } from '../../src/enums/ColorFormat'
 import { CSSHelper } from '../../src/transforms/CSSHelper'
 
@@ -233,6 +239,14 @@ tokens.set('typographyRef', {
   value: testTypography,
   name: 'typographyRef'
 } as TypographyToken)
+tokens.set('fontFamilyRef', {
+  value: testTypography.fontFamily,
+  name: 'fontFamilyRef'
+} as FontFamilyToken)
+tokens.set('fontWeightRef', {
+  value: testTypography.fontWeight,
+  name: 'fontWeightRef'
+} as FontWeightToken)
 
 test('toCSS_colorToken_1', () => {
   let color = {
@@ -505,5 +519,19 @@ test('toCSS_typographyToken_5', () => {
   }
   expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
     'small-caps "400" var(--dimensionRef)/var(--dimensionRef) "Arial"'
+  )
+})
+
+test('toCSS_typographyToken_6', () => {
+  let typography = {
+    ...testTypography,
+    fontFamily: { ...testTypography.fontFamily, referencedTokenId: 'fontFamilyRef' } as FontFamilyTokenValue,
+    fontWeight: { ...testTypography.fontWeight, referencedTokenId: 'fontWeightRef' } as FontWeightTokenValue,
+    fontSize: { ...testTypography.fontSize, referencedTokenId: 'dimensionRef' } as FontSizeTokenValue,
+    lineHeight: { ...testTypography.lineHeight, referencedTokenId: 'dimensionRef' } as LineHeightTokenValue,
+    textCase: { ...testTypography.textCase, value: TextCase.smallCaps } as TextCaseTokenValue
+  }
+  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
+    'small-caps var(--fontWeightRef) var(--dimensionRef)/var(--dimensionRef) var(--fontFamilyRef)'
   )
 })
