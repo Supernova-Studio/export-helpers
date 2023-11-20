@@ -535,3 +535,13 @@ test('toCSS_typographyToken_6', () => {
     'small-caps var(--fontWeightRef) var(--dimensionRef)/var(--dimensionRef) var(--fontFamilyRef)'
   )
 })
+
+test('toCSS_typographyToken_7', () => {
+  let typography = {
+    ...testTypography,
+    lineHeight: null
+  }
+  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
+    '"400" 16px "Arial"'
+  )
+})
