@@ -277,7 +277,7 @@ export class CSSHelper {
         : undefined,
       caps: typography.textCase.value === TextCase.smallCaps,
       fontSize: this.dimensionTokenValueToCSS(typography.fontSize, allTokens, options),
-      lineHeight: this.dimensionTokenValueToCSS(typography.lineHeight, allTokens, options)
+      lineHeight: typography.lineHeight ? this.dimensionTokenValueToCSS(typography.lineHeight, allTokens, options) : undefined
     }
 
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
@@ -286,9 +286,10 @@ export class CSSHelper {
     const fragmentWeight = fontWeightReference ? data.fontWeight : `\"${data.fontWeight}\"`
     const fragmentSize = data.fontSize
     const fragmentLineHeight = data.lineHeight
+    const fragmentSizeAndLineHeight = data.lineHeight ? `${fragmentSize}/${fragmentLineHeight}` : fragmentSize
     const fragmentFamily = fontFamilyReference ? data.fontFamily : `\"${data.fontFamily}\"`
 
-    return `${fragmentCaps}${fragmentWeight} ${fragmentSize}/${fragmentLineHeight} ${fragmentFamily}`
+    return `${fragmentCaps}${fragmentWeight} ${fragmentSizeAndLineHeight} ${fragmentFamily}`
   }
 
   static borderStyleToCSS(borderStyle: BorderStyle): string {
