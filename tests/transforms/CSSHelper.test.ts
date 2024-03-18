@@ -178,7 +178,14 @@ const testTypography: TypographyTokenValue = {
 }
 
 const testShadow: ShadowTokenValue = {
-  color: testColor,
+  color: {
+    ...testColor,
+    opacity: {
+      measure: 1,
+      referencedTokenId: null,
+      unit: Unit.raw
+    }
+  },
   x: 3,
   y: 4,
   radius: 5,
@@ -541,7 +548,5 @@ test('toCSS_typographyToken_7', () => {
     ...testTypography,
     lineHeight: null
   }
-  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
-    '"400" 16px "Arial"'
-  )
+  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('"400" 16px "Arial"')
 })
