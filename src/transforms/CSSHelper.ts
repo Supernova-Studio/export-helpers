@@ -194,7 +194,14 @@ export class CSSHelper {
     }
     return `${value.type === ShadowType.inner ? 'inset ' : ''}${value.x}px ${value.y}px ${value.radius}px ${
       value.spread
-    }px ${this.colorTokenValueToCSS(value.color, allTokens, options)}`
+    }px ${this.colorTokenValueToCSS(
+      {
+        ...value.color,
+        opacity: value.opacity
+      },
+      allTokens,
+      options
+    )}`
   }
 
   static stringTokenValueToCSS(
@@ -277,7 +284,9 @@ export class CSSHelper {
         : undefined,
       caps: typography.textCase.value === TextCase.smallCaps,
       fontSize: this.dimensionTokenValueToCSS(typography.fontSize, allTokens, options),
-      lineHeight: typography.lineHeight ? this.dimensionTokenValueToCSS(typography.lineHeight, allTokens, options) : undefined
+      lineHeight: typography.lineHeight
+        ? this.dimensionTokenValueToCSS(typography.lineHeight, allTokens, options)
+        : undefined
     }
 
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
