@@ -1,0 +1,36 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "images/**"
+      - "package.json"
+
+jobs:
+  build:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/Hydrogen
+
+      - name: Auth registry
+        run: npm config set "//registry.npmjs.org/:_authToken=${{ secrets.SUPERNOVA_NPM_TOKEN_PUBLISH }}"
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build:production
+
+      - name: Publish to NPM
+        run: npm run publish-package
