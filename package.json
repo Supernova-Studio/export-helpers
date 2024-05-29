@@ -1,83 +1,83 @@
 {
-    "name": "@supernovaio/export-helpers",
-    "version": "1.0.7",
-    "description": "Supernova.io Export Helpers and Utilities",
-    "main": "./build/helpers.js",
-    "types": "./build/types/src/index.d.ts",
-    "license": "MIT",
-    "keywords": [
-        "Supernova",
-        "Supernovaio",
-        "SDK",
-        "Utilities",
-        "Helpers",
-        "Design Systems",
-        "Tokens",
-        "Assets",
-        "Components"
+  "name": "@supernovaio/export-helpers",
+  "version": "1.0.7",
+  "description": "Supernova.io Export Helpers and Utilities",
+  "main": "./build/helpers.js",
+  "types": "./build/types/src/index.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "Supernova",
+    "Supernovaio",
+    "SDK",
+    "Utilities",
+    "Helpers",
+    "Design Systems",
+    "Tokens",
+    "Assets",
+    "Components"
+  ],
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "describe": "npm-scripts-info",
+    "build": "webpack --mode development --config ./webpack.config.main.js",
+    "build:production": "webpack --mode production --config ./webpack.config.main.js",
+    "clean": "trash build test",
+    "test": "jest",
+    "test:coverage": "npm test -- --coverage",
+    "test:badges": "npm run test:coverage  && jest-coverage-badges-ng --output \"./badges\"",
+    "publish-package": "npm run build:production && npm run test && npm publish --access public",
+    "pretty": "prettier --write \"./**/*.{ts,js}\""
+  },
+  "engines": {
+    "node": ">=8.9"
+  },
+  "dependencies": {
+    "@supernovaio/sdk-exporters": "2.0.9",
+    "change-case": "4.1.2"
+  },
+  "devDependencies": {
+    "@supernovaio/sdk": "2.0.4",
+    "@ava/typescript": "^4.0.0",
+    "@istanbuljs/nyc-config-typescript": "latest",
+    "@types/jest": "^29.5.5",
+    "ava": "5.2.0",
+    "dotenv": "^16.0.0",
+    "jest": "^29.7.0",
+    "nyc": "^14.1.1",
+    "trash-cli": "^5.0.0",
+    "ts-jest": "^29.1.1",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
+    "tslint": "^5.18.0",
+    "typescript": "^4.9.5",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-node-externals": "^3.0.0",
+    "jest-coverage-badges-ng": "^1.0.1",
+    "prettier": "^2.4.1"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--loader=ts-node/esm"
     ],
     "files": [
-        "build"
+      "src/**/*.spec.ts"
     ],
-    "scripts": {
-        "describe": "npm-scripts-info",
-        "build": "webpack --mode development --config ./webpack.config.main.js",
-        "build:production": "webpack --mode production --config ./webpack.config.main.js",
-        "clean": "trash build test",
-        "test": "jest",
-        "test:coverage": "npm test -- --coverage",
-        "test:badges": "npm run test:coverage  && jest-coverage-badges-ng --output \"./badges\"",
-        "publish-package": "npm run build:production && npm run test && npm publish --access public",
-        "pretty": "prettier --write \"./**/*.{ts,js}\""
-    },
-    "engines": {
-        "node": ">=8.9"
-    },
-    "dependencies": {
-        "@supernovaio/sdk-exporters": "2.0.9",
-        "change-case": "4.1.2"
-    },
-    "devDependencies": {
-        "@supernovaio/sdk": "2.0.4",
-        "@ava/typescript": "^4.0.0",
-        "@istanbuljs/nyc-config-typescript": "latest",
-        "@types/jest": "^29.5.5",
-        "ava": "5.2.0",
-        "dotenv": "^16.0.0",
-        "jest": "^29.7.0",
-        "nyc": "^14.1.1",
-        "trash-cli": "^5.0.0",
-        "ts-jest": "^29.1.1",
-        "ts-loader": "^9.2.6",
-        "ts-node": "^10.9.1",
-        "tsconfig-paths-webpack-plugin": "^3.5.2",
-        "tslint": "^5.18.0",
-        "typescript": "^4.9.5",
-        "webpack": "^5.66.0",
-        "webpack-cli": "^4.10.0",
-        "webpack-node-externals": "^3.0.0",
-        "jest-coverage-badges-ng": "^1.0.1",
-        "prettier": "^2.4.1"
-    },
-    "ava": {
-        "extensions": {
-            "ts": "module"
-        },
-        "nodeArguments": [
-            "--loader=ts-node/esm"
-        ],
-        "files": [
-            "src/**/*.spec.ts"
-        ],
-        "require": [
-            "dotenv/config"
-        ]
-    },
-    "config": {},
-    "nyc": {
-        "extends": "@istanbuljs/nyc-config-typescript",
-        "exclude": [
-            "**/*.spec.js"
-        ]
-    }
+    "require": [
+      "dotenv/config"
+    ]
+  },
+  "config": {},
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "exclude": [
+      "**/*.spec.js"
+    ]
+  }
 }

@@ -9,7 +9,7 @@
   </a>
 </p>
 
-[Supernova](https://supernova.io/) makes generation and delivery of production code from your design systems a breeze. In this repository, you'll find utilities that will help you build the exporters faster. If you are looking for existing exporters, we have [dedicated repository](https://github.com/Supernova-Studio/exporters) for just that. 
+[Supernova](https://supernova.io/) makes generation and delivery of production code from your design systems a breeze. In this repository, you'll find utilities that will help you build the exporters faster. If you are looking for existing exporters, we have [dedicated repository](https://github.com/Supernova-Studio/exporters) for just that.
 
 ![Header Image](images/exporters.png)
 
@@ -30,7 +30,6 @@ import { TokenUtils } from "@supernovaio/export-helpers"
 ```
 
 You can find the full list of available utilities [here](./docs/helpers.md).
-
 
 ## Help Us Build a Better Product
 

@@ -4,11 +4,7 @@
     "target": "esnext",
     "outDir": "build/module",
     "module": "esnext",
-    "lib": [
-      "ES2020.String"
-    ]
+    "lib": ["ES2020.String"]
   },
-  "exclude": [
-    "node_modules/**"
-  ]
+  "exclude": ["node_modules/**"]
 }
