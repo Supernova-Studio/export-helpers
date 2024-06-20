@@ -1,0 +1,30 @@
+name: Build & Test
+
+on:
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/Hydrogen
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build:production
+
+      - name: Test
+        run: npm run test
