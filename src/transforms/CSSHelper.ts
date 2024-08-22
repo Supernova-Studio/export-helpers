@@ -194,7 +194,7 @@ export class CSSHelper {
     }
     return `${value.type === ShadowType.inner ? 'inset ' : ''}${value.x}px ${value.y}px ${value.radius}px ${
       value.spread
-    }px ${this.colorTokenValueToCSS(value.color, allTokens, options)}`
+    }px ${this.colorTokenValueToCSS({ ...value.color, opacity: value.opacity }, allTokens, options)}`
   }
 
   static stringTokenValueToCSS(

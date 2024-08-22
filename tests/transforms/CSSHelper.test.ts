@@ -38,7 +38,8 @@ import {
 } from '@supernovaio/sdk-exporters'
 import {
   FontFamilyTokenValue,
-  FontWeightTokenValue
+  FontWeightTokenValue,
+  OpacityTokenValue
 } from '@supernovaio/sdk-exporters/build/sdk-typescript/src/model/tokens/SDKTokenValue'
 import { ColorFormat } from '../../src/enums/ColorFormat'
 import { CSSHelper } from '../../src/transforms/CSSHelper'
@@ -57,6 +58,12 @@ const testColor: ColorTokenValue = {
     unit: Unit.raw
   },
   referencedTokenId: null
+}
+
+const testOpacity: OpacityTokenValue = {
+  measure: 0.25,
+  referencedTokenId: null,
+  unit: Unit.raw
 }
 
 /** Base formattable border */
@@ -183,7 +190,7 @@ const testShadow: ShadowTokenValue = {
   y: 4,
   radius: 5,
   spread: 6,
-  opacity: testColor.opacity,
+  opacity: testOpacity,
   type: ShadowType.drop,
   referencedTokenId: null
 }
@@ -445,7 +452,7 @@ test('toCSS_shadowToken_1', () => {
   let shadow = {
     ...testShadow
   }
-  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('3px 4px 5px 6px #8764c880')
+  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('3px 4px 5px 6px #8764c840')
 })
 
 test('toCSS_shadowToken_2', () => {
@@ -470,7 +477,7 @@ test('toCSS_shadowToken_4', () => {
     color: { ...testShadow.color, referencedTokenId: 'colorRef' }
   }
   expect(CSSHelper.shadowTokenValueToCSS([testShadow, shadow], tokens, testOptions)).toBe(
-    '3px 4px 5px 6px #8764c880, 3px 4px 5px 6px var(--colorRef)'
+    '3px 4px 5px 6px #8764c840, 3px 4px 5px 6px var(--colorRef)'
   )
 })
 
