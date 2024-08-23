@@ -195,6 +195,16 @@ const testShadow: ShadowTokenValue = {
   referencedTokenId: null
 }
 
+const testShadowNoOpacity: ShadowTokenValue = {
+  color: testColor,
+  x: 3,
+  y: 4,
+  radius: 5,
+  spread: 6,
+  type: ShadowType.drop,
+  referencedTokenId: null
+}
+
 /** Base formatting options */
 const testOptions = {
   allowReferences: true,
@@ -241,6 +251,10 @@ tokens.set('blurRef', {
 tokens.set('shadowRef', {
   value: [testShadow],
   name: 'shadowRef'
+} as ShadowToken)
+tokens.set('shadowNoOpacityRef', {
+  value: [testShadowNoOpacity],
+  name: 'shadowNoOpacityRef'
 } as ShadowToken)
 tokens.set('typographyRef', {
   value: testTypography,
@@ -477,6 +491,39 @@ test('toCSS_shadowToken_4', () => {
     color: { ...testShadow.color, referencedTokenId: 'colorRef' }
   }
   expect(CSSHelper.shadowTokenValueToCSS([testShadow, shadow], tokens, testOptions)).toBe(
+    '3px 4px 5px 6px #8764c880, 3px 4px 5px 6px var(--colorRef)'
+  )
+})
+
+test('toCSS_shadowTokenNoOpacity_1', () => {
+  let shadow = {
+    ...testShadowNoOpacity
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('3px 4px 5px 6px #8764c880')
+})
+
+test('toCSS_shadowTokenNoOpacity_2', () => {
+  let shadow = {
+    ...testShadowNoOpacity,
+    referencedTokenId: 'shadowNoOpacityRef'
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('var(--shadowNoOpacityRef)')
+})
+
+test('toCSS_shadowTokenNoOpacity_3', () => {
+  let shadow = {
+    ...testShadowNoOpacity,
+    color: { ...testShadowNoOpacity.color, referencedTokenId: 'colorRef' }
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('3px 4px 5px 6px var(--colorRef)')
+})
+
+test('toCSS_shadowTokenNoOpacity_4', () => {
+  let shadow = {
+    ...testShadowNoOpacity,
+    color: { ...testShadowNoOpacity.color, referencedTokenId: 'colorRef' }
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([testShadowNoOpacity, shadow], tokens, testOptions)).toBe(
     '3px 4px 5px 6px #8764c880, 3px 4px 5px 6px var(--colorRef)'
   )
 })
