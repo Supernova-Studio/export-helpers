@@ -297,7 +297,7 @@ export class CSSHelper {
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
     // Example: small-caps bold 24px/1rem "Wingdings"
     const fragmentCaps = data.caps ? 'small-caps ' : ''
-    const fragmentWeight = fontWeightReference ? data.fontWeight : `${data.fontWeight}`
+    const fragmentWeight = data.fontWeight
     const fragmentSize = data.fontSize
     const fragmentLineHeight = data.lineHeight
     const fragmentSizeAndLineHeight = data.lineHeight ? `${fragmentSize}/${fragmentLineHeight}` : fragmentSize
