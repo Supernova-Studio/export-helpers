@@ -199,7 +199,7 @@ export class CSSHelper {
     }px ${this.colorTokenValueToCSS(
       {
         ...value.color,
-        opacity: value.opacity
+        ...(value.opacity && { opacity: value.opacity })
       },
       allTokens,
       options

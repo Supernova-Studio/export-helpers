@@ -195,6 +195,16 @@ const testShadow: ShadowTokenValue = {
   referencedTokenId: null
 }
 
+const testShadowNoOpacity: ShadowTokenValue = {
+  color: testColor,
+  x: 3,
+  y: 4,
+  radius: 5,
+  spread: 6,
+  type: ShadowType.drop,
+  referencedTokenId: null
+}
+
 /** Base formatting options */
 const testOptions = {
   allowReferences: true,
@@ -241,6 +251,10 @@ tokens.set('blurRef', {
 tokens.set('shadowRef', {
   value: [testShadow],
   name: 'shadowRef'
+} as ShadowToken)
+tokens.set('shadowNoOpacityRef', {
+  value: [testShadowNoOpacity],
+  name: 'shadowNoOpacityRef'
 } as ShadowToken)
 tokens.set('typographyRef', {
   value: testTypography,
@@ -481,11 +495,44 @@ test('toCSS_shadowToken_4', () => {
   )
 })
 
+test('toCSS_shadowTokenNoOpacity_1', () => {
+  let shadow = {
+    ...testShadowNoOpacity
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('3px 4px 5px 6px #8764c880')
+})
+
+test('toCSS_shadowTokenNoOpacity_2', () => {
+  let shadow = {
+    ...testShadowNoOpacity,
+    referencedTokenId: 'shadowNoOpacityRef'
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('var(--shadowNoOpacityRef)')
+})
+
+test('toCSS_shadowTokenNoOpacity_3', () => {
+  let shadow = {
+    ...testShadowNoOpacity,
+    color: { ...testShadowNoOpacity.color, referencedTokenId: 'colorRef' }
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([shadow], tokens, testOptions)).toBe('3px 4px 5px 6px var(--colorRef)')
+})
+
+test('toCSS_shadowTokenNoOpacity_4', () => {
+  let shadow = {
+    ...testShadowNoOpacity,
+    color: { ...testShadowNoOpacity.color, referencedTokenId: 'colorRef' }
+  }
+  expect(CSSHelper.shadowTokenValueToCSS([testShadowNoOpacity, shadow], tokens, testOptions)).toBe(
+    '3px 4px 5px 6px #8764c880, 3px 4px 5px 6px var(--colorRef)'
+  )
+})
+
 test('toCSS_typographyToken_1', () => {
   let typography = {
     ...testTypography
   }
-  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('"400" 16px/1rem "Arial"')
+  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('400 16px/1rem "Arial"')
 })
 
 test('toCSS_typographyToken_2', () => {
@@ -502,7 +549,7 @@ test('toCSS_typographyToken_3', () => {
     lineHeight: { ...testTypography.lineHeight, referencedTokenId: 'dimensionRef' } as LineHeightTokenValue
   }
   expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
-    '"400" 16px/var(--dimensionRef) "Arial"'
+    '400 16px/var(--dimensionRef) "Arial"'
   )
 })
 
@@ -513,7 +560,7 @@ test('toCSS_typographyToken_4', () => {
     lineHeight: { ...testTypography.lineHeight, referencedTokenId: 'dimensionRef' } as LineHeightTokenValue
   }
   expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
-    '"400" var(--dimensionRef)/var(--dimensionRef) "Arial"'
+    '400 var(--dimensionRef)/var(--dimensionRef) "Arial"'
   )
 })
 
@@ -525,7 +572,7 @@ test('toCSS_typographyToken_5', () => {
     textCase: { ...testTypography.textCase, value: TextCase.smallCaps } as TextCaseTokenValue
   }
   expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
-    'small-caps "400" var(--dimensionRef)/var(--dimensionRef) "Arial"'
+    'small-caps 400 var(--dimensionRef)/var(--dimensionRef) "Arial"'
   )
 })
 
@@ -548,5 +595,5 @@ test('toCSS_typographyToken_7', () => {
     ...testTypography,
     lineHeight: null
   }
-  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('"400" 16px "Arial"')
+  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('400 16px "Arial"')
 })
