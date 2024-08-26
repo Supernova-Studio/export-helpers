@@ -6,6 +6,7 @@ import {
   BorderStyle,
   BorderToken,
   ColorToken,
+  FontWeightToken,
   GradientToken,
   GradientType,
   ShadowToken,
@@ -76,6 +77,7 @@ export class CSSHelper {
       case TokenType.shadow:
         return this.shadowTokenValueToCSS((token as ShadowToken).value, allTokens, options)
       case TokenType.fontWeight:
+        return this.fontWeightTokenValueToCSS((token as FontWeightToken).value, allTokens, options)
       case TokenType.fontFamily:
       case TokenType.productCopy:
       case TokenType.string:
@@ -204,6 +206,18 @@ export class CSSHelper {
     )}`
   }
 
+  static fontWeightTokenValueToCSS(
+    value: AnyStringTokenValue,
+    allTokens: Map<string, Token>,
+    options: TokenToCSSOptions
+  ): string {
+    const reference = sureOptionalReference(value.referencedTokenId, allTokens, options.allowReferences)
+    if (reference) {
+      return options.tokenToVariableRef(reference)
+    }
+    return `${value.text}`
+  }
+
   static stringTokenValueToCSS(
     value: AnyStringTokenValue,
     allTokens: Map<string, Token>,
@@ -292,7 +306,7 @@ export class CSSHelper {
     // Formal CSS definition: font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
     // Example: small-caps bold 24px/1rem "Wingdings"
     const fragmentCaps = data.caps ? 'small-caps ' : ''
-    const fragmentWeight = fontWeightReference ? data.fontWeight : `\"${data.fontWeight}\"`
+    const fragmentWeight = data.fontWeight
     const fragmentSize = data.fontSize
     const fragmentLineHeight = data.lineHeight
     const fragmentSizeAndLineHeight = data.lineHeight ? `${fragmentSize}/${fragmentLineHeight}` : fragmentSize
