@@ -532,7 +532,7 @@ test('toCSS_typographyToken_1', () => {
   let typography = {
     ...testTypography
   }
-  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('"400" 16px/1rem "Arial"')
+  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('400 16px/1rem "Arial"')
 })
 
 test('toCSS_typographyToken_2', () => {
@@ -549,7 +549,7 @@ test('toCSS_typographyToken_3', () => {
     lineHeight: { ...testTypography.lineHeight, referencedTokenId: 'dimensionRef' } as LineHeightTokenValue
   }
   expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
-    '"400" 16px/var(--dimensionRef) "Arial"'
+    '400 16px/var(--dimensionRef) "Arial"'
   )
 })
 
@@ -560,7 +560,7 @@ test('toCSS_typographyToken_4', () => {
     lineHeight: { ...testTypography.lineHeight, referencedTokenId: 'dimensionRef' } as LineHeightTokenValue
   }
   expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
-    '"400" var(--dimensionRef)/var(--dimensionRef) "Arial"'
+    '400 var(--dimensionRef)/var(--dimensionRef) "Arial"'
   )
 })
 
@@ -572,7 +572,7 @@ test('toCSS_typographyToken_5', () => {
     textCase: { ...testTypography.textCase, value: TextCase.smallCaps } as TextCaseTokenValue
   }
   expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe(
-    'small-caps "400" var(--dimensionRef)/var(--dimensionRef) "Arial"'
+    'small-caps 400 var(--dimensionRef)/var(--dimensionRef) "Arial"'
   )
 })
 
@@ -595,5 +595,5 @@ test('toCSS_typographyToken_7', () => {
     ...testTypography,
     lineHeight: null
   }
-  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('"400" 16px "Arial"')
+  expect(CSSHelper.typographyTokenValueToCSS(typography, tokens, testOptions)).toBe('400 16px "Arial"')
 })
