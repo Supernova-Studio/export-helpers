@@ -83,9 +83,11 @@ export class CSSHelper {
       case TokenType.string:
         return this.stringTokenValueToCSS((token as AnyStringToken).value, allTokens, options)
       case TokenType.textCase:
+        return this.optionTokenValueToCSS((token as AnyOptionToken).value, allTokens, options, token.tokenType)
       case TokenType.textDecoration:
+        return this.optionTokenValueToCSS((token as AnyOptionToken).value, allTokens, options, token.tokenType)
       case TokenType.visibility:
-        return this.optionTokenValueToCSS((token as AnyOptionToken).value, allTokens, options)
+        return this.optionTokenValueToCSS((token as AnyOptionToken).value, allTokens, options, token.tokenType)
       case TokenType.blur:
         return this.blurTokenValueToCSS((token as BlurToken).value, allTokens, options)
       case TokenType.typography:
@@ -233,13 +235,22 @@ export class CSSHelper {
   static optionTokenValueToCSS(
     option: AnyOptionTokenValue,
     allTokens: Map<string, Token>,
-    options: TokenToCSSOptions
+    options: TokenToCSSOptions,
+    tokenType: TokenType
   ): string {
     const reference = sureOptionalReference(option.referencedTokenId, allTokens, options.allowReferences)
     if (reference) {
       return options.tokenToVariableRef(reference)
     }
-    return `"${option.value}"`
+    if (tokenType === TokenType.textCase) {
+      return this.textCaseToCSS(option.value as TextCase)
+    }
+    if (tokenType === TokenType.textDecoration) {
+      return this.textDecorationToCSS(option.value as TextDecoration)
+    }
+
+    // Visibility values are supported in CSS as is our data model
+    return option.value
   }
 
   static blurTokenValueToCSS(blur: BlurTokenValue, allTokens: Map<string, Token>, options: TokenToCSSOptions): string {
