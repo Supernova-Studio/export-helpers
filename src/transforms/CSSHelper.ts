@@ -83,9 +83,7 @@ export class CSSHelper {
       case TokenType.string:
         return this.stringTokenValueToCSS((token as AnyStringToken).value, allTokens, options)
       case TokenType.textCase:
-        return this.optionTokenValueToCSS((token as AnyOptionToken).value, allTokens, options, token.tokenType)
       case TokenType.textDecoration:
-        return this.optionTokenValueToCSS((token as AnyOptionToken).value, allTokens, options, token.tokenType)
       case TokenType.visibility:
         return this.optionTokenValueToCSS((token as AnyOptionToken).value, allTokens, options, token.tokenType)
       case TokenType.blur:

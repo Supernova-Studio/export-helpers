@@ -454,14 +454,14 @@ test('toCSS_optionToken_2', () => {
   expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions, TokenType.textCase)).toBe('var(--optionRef)')
 })
 
-test('toCSS_optionToken_2', () => {
+test('toCSS_optionTextDecorationToken_1', () => {
   let option = {
     ...testOptionTextDecoration
   }
   expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions, TokenType.textDecoration)).toBe('underline')
 })
 
-test('toCSS_optionToken_2', () => {
+test('toCSS_optionTextDecorationToken_2', () => {
   let option = {
     ...testOptionTextDecoration,
     value: TextDecoration.strikethrough
