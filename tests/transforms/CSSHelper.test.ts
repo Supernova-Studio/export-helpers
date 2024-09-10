@@ -23,6 +23,7 @@ import {
   TextCase,
   TextDecoration,
   Token,
+  TokenType,
   TypographyToken,
   Unit
 } from '@supernovaio/sdk-exporters'
@@ -106,6 +107,12 @@ const testOption: AnyOptionTokenValue = {
   value: TextCase.lower,
   referencedTokenId: null,
   options: [TextCase.lower, TextCase.upper]
+}
+
+const testOptionTextDecoration: AnyOptionTokenValue = {
+  value: TextDecoration.underline,
+  referencedTokenId: null,
+  options: [TextDecoration.original, TextDecoration.underline, TextDecoration.strikethrough]
 }
 
 const testGradient: GradientTokenValue = {
@@ -436,7 +443,7 @@ test('toCSS_optionToken_1', () => {
   let option = {
     ...testOption
   }
-  expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions)).toBe('"Lower"')
+  expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions, TokenType.textCase)).toBe('lowercase')
 })
 
 test('toCSS_optionToken_2', () => {
@@ -444,7 +451,22 @@ test('toCSS_optionToken_2', () => {
     ...testOption,
     referencedTokenId: 'optionRef'
   }
-  expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions)).toBe('var(--optionRef)')
+  expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions, TokenType.textCase)).toBe('var(--optionRef)')
+})
+
+test('toCSS_optionTextDecorationToken_1', () => {
+  let option = {
+    ...testOptionTextDecoration
+  }
+  expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions, TokenType.textDecoration)).toBe('underline')
+})
+
+test('toCSS_optionTextDecorationToken_2', () => {
+  let option = {
+    ...testOptionTextDecoration,
+    value: TextDecoration.strikethrough
+  }
+  expect(CSSHelper.optionTokenValueToCSS(option, tokens, testOptions, TokenType.textDecoration)).toBe('line-through')
 })
 
 test('toCSS_blurToken_1', () => {
