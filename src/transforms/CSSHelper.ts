@@ -140,10 +140,38 @@ export class CSSHelper {
     if (reference) {
       return options.tokenToVariableRef(reference)
     }
+
+    const deltaX =
+      ColorHelper.roundToDecimals(value.to.x, options.decimals) -
+      ColorHelper.roundToDecimals(value.from.x, options.decimals)
+    const deltaY =
+      ColorHelper.roundToDecimals(value.to.y, options.decimals) -
+      ColorHelper.roundToDecimals(value.from.y, options.decimals)
+
+    const rad = Math.atan2(deltaY, deltaX)
+    const deg = rad * (180 / Math.PI)
+
+    const getAngle = () => {
+      if (deltaX >= 0 && deltaY > 0) {
+        // top to bottom is 90deg but should be 180deg
+        return 90 + deg
+      }
+      if (deltaX > 0 && deltaY <= 0) {
+        // left to right is 0deg but should be 90deg
+        return 90 + deg
+      }
+      if (deltaX <= 0 && deltaY < 0) {
+        // bottom to top is -90deg but should be 0deg
+        return 90 + deg
+      }
+      // right to left is 180deg but should be -90deg
+      return deg - 270
+    }
+
     let gradientType = ''
     switch (value.type) {
       case GradientType.linear:
-        gradientType = 'linear-gradient(0deg, '
+        gradientType = `linear-gradient(${getAngle()}deg, `
         break
       case GradientType.radial:
         gradientType = 'radial-gradient(circle, '
@@ -152,7 +180,7 @@ export class CSSHelper {
         gradientType = 'conic-gradient('
         break
       default:
-        gradientType = 'linear-gradient(0deg, '
+        gradientType = `linear-gradient(${getAngle()}deg, `
         break
     }
 

@@ -365,7 +365,7 @@ test('toCSS_gradientToken_1', () => {
     ...testGradient
   }
   expect(CSSHelper.gradientTokenValueToCSS([gradient], tokens, testOptions)).toBe(
-    'linear-gradient(0deg, #8764c880 0%, #8764c880 100%)'
+    'linear-gradient(135deg, #8764c880 0%, #8764c880 100%)'
   )
 })
 
@@ -383,7 +383,7 @@ test('toCSS_gradientToken_3', () => {
     referencedTokenId: 'gradientRef'
   }
   expect(CSSHelper.gradientTokenValueToCSS([gradient, { ...testGradient }], tokens, testOptions)).toBe(
-    'var(--gradientRef), linear-gradient(0deg, #8764c880 0%, #8764c880 100%)'
+    'var(--gradientRef), linear-gradient(135deg, #8764c880 0%, #8764c880 100%)'
   )
 })
 
@@ -404,8 +404,9 @@ test('toCSS_gradientToken_4', () => {
       }
     ]
   }
+
   expect(CSSHelper.gradientTokenValueToCSS([gradient], tokens, testOptions)).toBe(
-    'linear-gradient(0deg, var(--colorRef) 0%, #8764c880 100%)'
+    'linear-gradient(135deg, var(--colorRef) 0%, #8764c880 100%)'
   )
 })
 
