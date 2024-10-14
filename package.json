@@ -40,7 +40,7 @@
   "devDependencies": {
     "@ava/typescript": "^4.0.0",
     "@istanbuljs/nyc-config-typescript": "latest",
-    "@supernovaio/sdk": "^2.0.22",
+    "@supernovaio/sdk": "2.0.23",
     "@types/jest": "^29.5.5",
     "ava": "5.2.0",
     "dotenv": "^16.0.0",
