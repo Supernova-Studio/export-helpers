@@ -34,13 +34,13 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "@supernovaio/sdk-exporters": "2.0.21",
+    "@supernovaio/sdk-exporters": "2.0.23",
     "change-case": "4.1.2"
   },
   "devDependencies": {
     "@ava/typescript": "^4.0.0",
     "@istanbuljs/nyc-config-typescript": "latest",
-    "@supernovaio/sdk": "^2.0.22",
+    "@supernovaio/sdk": "2.0.23",
     "@types/jest": "^29.5.5",
     "ava": "5.2.0",
     "dotenv": "^16.0.0",
