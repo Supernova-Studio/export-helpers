@@ -7,6 +7,7 @@ on:
       - "src/**"
       - "images/**"
       - "package.json"
+  workflow_dispatch:
 
 jobs:
   build:
