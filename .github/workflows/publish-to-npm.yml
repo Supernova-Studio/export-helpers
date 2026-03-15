@@ -10,7 +10,7 @@ on:
       - ".github/workflows/publish-to-npm.yml"
 
 permissions:
-  id-token: write # Required for OIDC
+  id-token: write
   contents: read
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Install dependencies
         run: npm i
