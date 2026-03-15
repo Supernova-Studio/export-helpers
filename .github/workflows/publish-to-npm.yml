@@ -8,6 +8,10 @@ on:
       - "images/**"
       - "package.json"
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   build:
     name: Publish to NPM
@@ -21,10 +25,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: lts/Hydrogen
-
-      - name: Auth registry
-        run: npm config set "//registry.npmjs.org/:_authToken=${{ secrets.SUPERNOVA_NPM_TOKEN_PUBLISH }}"
+          node-version: 22
 
       - name: Install dependencies
         run: npm i
