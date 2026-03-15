@@ -7,7 +7,7 @@ on:
       - "src/**"
       - "images/**"
       - "package.json"
-      - "workflows/publish-to-npm.yml"
+      - ".github/workflows/publish-to-npm.yml"
 
 permissions:
   id-token: write # Required for OIDC
