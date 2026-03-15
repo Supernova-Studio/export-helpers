@@ -4,6 +4,9 @@
   "description": "Supernova.io Export Helpers and Utilities",
   "main": "./build/helpers.js",
   "types": "./build/types/src/index.d.ts",
+  "repository": {
+    "url": "https://github.com/Supernova-Studio/export-helpers"
+  },
   "license": "MIT",
   "keywords": [
     "Supernova",
